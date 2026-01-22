@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>২০২৭ মিশন: ১৩টি বই</title>
+    <style>
+        body {
+            background: radial-gradient(circle, #1e1e2f, #000000);
+            color: #ffffff;
+            font-family: 'SolaimanLipi', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #ff3e3e;
+            text-shadow: 2px 2px 10px rgba(255, 62, 62, 0.5);
+            margin-bottom: 5px;
+        }
+
+        .warning {
+            font-size: 1.5rem;
+            color: #ffcc00;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        #countdown {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        .time-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .time-box:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            display: block;
+            color: #00d4ff;
+        }
+
+        .label {
+            font-size: 1rem;
+            color: #ccc;
+            margin-top: 5px;
+        }
+
+        .mission-footer {
+            margin-top: 50px;
+            padding: 20px;
+            border: 2px dashed #ffcc00;
+            border-radius: 10px;
+            background: rgba(255, 204, 0, 0.05);
+        }
+
+        .mission-footer p {
+            font-size: 1.4rem;
+            margin: 0;
+        }
+
+        .highlight {
+            color: #ffcc00;
+            font-weight: bold;
+            font-size: 1.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>বসো পড়তে বসো। সময় চলে যাচ্ছে।</h1>
+    <div class="warning">২০২৭ সাল আসতে আর মাত্র বাকি:</div>
+
+    <div id="countdown">
+        <div class="time-box">
+            <span id="months" class="number">00</span>
+            <span class="label">মাস</span>
+        </div>
+        <div class="time-box">
+            <span id="days" class="number">00</span>
+            <span class="label">দিন</span>
+        </div>
+        <div class="time-box">
+            <span id="hours" class="number">00</span>
+            <span class="label">ঘণ্টা</span>
+        </div>
+        <div class="time-box">
+            <span id="minutes" class="number">00</span>
+            <span class="label">মিনিট</span>
+        </div>
+        <div class="time-box">
+            <span id="seconds" class="number">00</span>
+            <span class="label">সেকেন্ড</span>
+        </div>
+    </div>
+
+    <div class="mission-footer">
+        <p>মনে রেখো, তোমাকে <span class="highlight">১৩টি বই</span> পড়তে হবে!</p>
+    </div>
+
+    <script>
+        function updateCountdown() {
+            const targetDate = new Date("January 1, 2027 00:00:00");
+            const now = new Date();
+            
+            let years = targetDate.getFullYear() - now.getFullYear();
+            let months = targetDate.getMonth() - now.getMonth();
+            let days = targetDate.getDate() - now.getDate();
+
+            // মাস এবং দিনের হিসাব ঠিক করা
+            if (days < 0) {
+                months--;
+                const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                days += lastMonth.getDate();
+            }
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            const totalMonths = months + (years * 12);
+
+            // সময় (ঘণ্টা, মিনিট, সেকেন্ড)
+            const diff = targetDate - now;
+            const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const m = Math.floor((diff / 1000 / 60) % 60);
+            const s = Math.floor((diff / 1000) % 60);
+
+            if (diff > 0) {
+                document.getElementById("months").innerText = totalMonths;
+                document.getElementById("days").innerText = days;
+                document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
+                document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
+                document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
+            } else {
+                document.body.innerHTML = "<h1>২০২৭ সাল শুরু হয়ে গেছে!</h1>";
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+
+</body>
+</html>
